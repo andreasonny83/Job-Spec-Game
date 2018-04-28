@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 import { ScreenSizeService } from './../screen-size/screen-size.service';
 
 @Injectable()
 export class CharPositionOnScreenService {
-
   screenWidth: number;
   screenHeight: number;
   charPosition;
@@ -21,17 +22,18 @@ export class CharPositionOnScreenService {
       this.gameCompleted$ = new BehaviorSubject(false);
   }
 
-  setCharPosition = (position) => {
+  setCharPosition(position) {
     this.charPosition = position;
     this.charXPosition$.next(this.charPosition.x);
     this.charScreenPosition = this.calculateCharaterScreenPosition(this.charPosition, this.screenWidth);
     this.charScreenPosition$.next(this.charScreenPosition);
-  };
+  }
 
-  calculateCharaterScreenPosition = (position, width: number) => {
+  calculateCharaterScreenPosition(position, width: number) {
     return (position.x / <number>(width - 100)) * 100; // Subtract 100 for char width
   }
 
-  setGameCompleted = () => this.gameCompleted$.next(true);
-
+  setGameCompleted() {
+    this.gameCompleted$.next(true);
+  }
 }

@@ -7,8 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./video-box.component.css']
 })
 export class VideoBoxComponent implements OnInit {
-
-  position = { x: 0, y: 64 }
+  position: IPosition;
   thumbnail;
   iframe = "";
   safeURL;
@@ -17,7 +16,9 @@ export class VideoBoxComponent implements OnInit {
   @Input() public bottom: number;
   @Input() public youTubeId: string;
 
-  constructor(public sanitizer: DomSanitizer) {}
+  constructor(public sanitizer: DomSanitizer) {
+    this.position = { x: 0, y: 64 };
+  }
 
   getIframe = () => {
     this.iframe = "clicked";

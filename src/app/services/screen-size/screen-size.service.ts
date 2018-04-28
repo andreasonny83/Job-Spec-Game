@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class ScreenSizeService {
-
   width$: Observable<number>;
   height$: Observable<number>;
 
@@ -13,17 +13,18 @@ export class ScreenSizeService {
     this.height$ = (windowSize$.pluck('height') as Observable<number>).distinctUntilChanged();
   }
 
-  createWindowSize$ = () =>
+  createWindowSize$() {
     Observable.fromEvent(window, 'resize')
       .map(this.getWindowSize)
       .startWith(this.getWindowSize())
       .publishReplay(1)
       .refCount();
+  }
 
-  getWindowSize = () => {
+  getWindowSize() {
     return {
       height: window.innerHeight,
-      width: window.innerWidth
-    }
+      width: window.innerWidth,
+    };
   }
 }
