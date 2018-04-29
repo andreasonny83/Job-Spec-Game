@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class LerpService { // Linear interpolation function
-
   constructor() { }
 
   public lerp(start, end): IPosition {
@@ -16,7 +15,7 @@ export class LerpService { // Linear interpolation function
     };
   }
 
-  calculateNewPosition(position, speed) {
+  public calculateNewPosition(position, speed): IPosition {
     return {
       x: (position.x + speed.x),
       y: (position.y + speed.y)

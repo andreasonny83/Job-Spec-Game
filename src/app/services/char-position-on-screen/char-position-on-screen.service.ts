@@ -8,32 +8,38 @@ import { ScreenSizeService } from './../screen-size/screen-size.service';
 export class CharPositionOnScreenService {
   screenWidth: number;
   screenHeight: number;
-  charPosition;
+  charPosition: IPosition;
   charScreenPosition: number;
   charScreenPosition$: BehaviorSubject<number>;
   charXPosition$: BehaviorSubject<number>;
   gameCompleted$: BehaviorSubject<boolean>;
 
-  constructor(private screenSizeService: ScreenSizeService) {
-    const windowSize$ = screenSizeService.width$
-      .subscribe(result => { this.screenWidth = result; });
-      this.charScreenPosition$ = new BehaviorSubject(0);
-      this.charXPosition$ = new BehaviorSubject(0);
-      this.gameCompleted$ = new BehaviorSubject(false);
+  constructor(
+    private screenSizeService: ScreenSizeService,
+  ) {
+    this.charScreenPosition$ = new BehaviorSubject(0);
+    this.charXPosition$ = new BehaviorSubject(0);
+    this.gameCompleted$ = new BehaviorSubject(false);
+
+    this.screenSizeService.width$
+      .subscribe(result => this.screenWidth = result);
   }
 
-  setCharPosition(position) {
+  public setCharPosition(position): void {
     this.charPosition = position;
     this.charXPosition$.next(this.charPosition.x);
-    this.charScreenPosition = this.calculateCharaterScreenPosition(this.charPosition, this.screenWidth);
     this.charScreenPosition$.next(this.charScreenPosition);
+
+    this.charScreenPosition = this
+      .calculateCharaterScreenPosition(this.charPosition, this.screenWidth);
   }
 
-  calculateCharaterScreenPosition(position, width: number) {
-    return (position.x / <number>(width - 100)) * 100; // Subtract 100 for char width
+  public calculateCharaterScreenPosition(position, width: number): number {
+    // Subtract 100 for char width
+    return (position.x / <number>(width - 100)) * 100;
   }
 
-  setGameCompleted() {
+  public setGameCompleted(): void {
     this.gameCompleted$.next(true);
   }
 }

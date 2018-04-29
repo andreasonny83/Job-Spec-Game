@@ -3,6 +3,7 @@
   height: 64px;
   background-image: url("/assets/woman-standing.svg");
   position: absolute;
+  transition: bottom .2s linear;
 }
 
 .character.moving {
